@@ -11,6 +11,10 @@ class App
     'nine'  => 9,
   }
 
+  def initialize(part:)
+    @part = part
+  end
+
   def run(filename)
     sum = 0
     File.open(filename) do |f|
@@ -26,7 +30,11 @@ class App
   end
 
   def line_to_digits(line)
-    line.scan(/(?=(\d|one|two|three|four|five|six|seven|eight|nine))/).flatten
+    if @part == 1
+      line.scan(/\d/).flatten
+    else
+      line.scan(/(?=(\d|one|two|three|four|five|six|seven|eight|nine))/).flatten
+    end
   end
 
   def first_and_last(digits)
@@ -35,5 +43,5 @@ class App
 end
 
 if __FILE__ == $0
-  puts App.new.run(ARGV[0])
+  puts App.new(part: ENV['PART'].to_i).run(ARGV[0])
 end
