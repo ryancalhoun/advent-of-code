@@ -1,0 +1,7 @@
+task :test do
+  sh 'rspec test.rb'
+end
+
+task :run do
+  sh 'ruby app.rb full.txt'
+end

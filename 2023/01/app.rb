@@ -1,42 +1,39 @@
-sum = 0
+class App
+  DIGITS = {
+    'one'   => 1,
+    'two'   => 2,
+    'three' => 3,
+    'four'  => 4,
+    'five'  => 5,
+    'six'   => 6,
+    'seven' => 7,
+    'eight' => 8,
+    'nine'  => 9,
+  }
 
-class String
-  def to_num
-    case self
-    when 'one'
-      1
-    when 'two'
-      2
-    when 'three'
-      3
-    when 'four'
-      4
-    when 'five'
-      5
-    when 'six'
-      6
-    when 'seven'
-      7
-    when 'eight'
-      8
-    when 'nine'
-      9
-    else
-      to_i
+  def run(filename)
+    sum = 0
+    File.open(filename) do |f|
+      f.each_line do |line|
+        sum += first_and_last(line_to_digits(line).map {|s| str_to_i(s)})
+      end
     end
+    sum
+  end
 
+  def str_to_i(str)
+    DIGITS[str] || str.to_i
+  end
+
+  def line_to_digits(line)
+    line.scan(/(?=(\d|one|two|three|four|five|six|seven|eight|nine))/).flatten
+  end
+
+  def first_and_last(digits)
+    "#{digits.first}#{digits.last}".to_i
   end
 end
 
-
-
-STDIN.each_line do |line|
-  puts line
-  digits = line.scan(/(?=(\d|one|two|three|four|five|six|seven|eight|nine))/).flatten
-  puts digits.inspect
-  x = "#{digits.first.to_num}#{digits.last.to_num}".to_i
-
-  sum += x
+if __FILE__ == $0
+  puts App.new.run(ARGV[0])
 end
-
-puts sum
