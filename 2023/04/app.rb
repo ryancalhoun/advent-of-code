@@ -1,24 +1,42 @@
-pile = Hash.new(0)
+require_relative 'card'
 
-STDIN.each_line do |line|
-  card, numbers = line.split(':')
-  winning, have = numbers.split('|').map do |s|
-    s.scan(/\d+/).map(&:to_i)
+class App
+  def initialize(part:)
+    @part = part
   end
 
-  cardnum = /\d+/.match(card)[0].to_i
+  def run(filename)
+    part = if @part == 1
+      lambda do |&block|
+        points = 0
+        block.call do |card|
+          points += card.points
+        end
+        points
+      end
+    else
+      lambda do |&block|
+        pile = Hash.new(0)
+        block.call do |card|
+          copies = pile[card.num] += 1
+          matches = card.count_matches
+          matches.times do |m|
+            pile[card.num+matches-m] += copies
+          end
+        end
+        pile.values.inject(:+)
+      end
+    end
 
-  matches = 0
-  have.each do |h|
-    matches += 1 if winning.include?(h)
+    part.call do |&block|
+      File.open(filename).each_line do |line|
+        block.call Card.parse line
+      end
+    end
   end
-
-  copies = pile[cardnum] += 1
-
-  matches.times do |m|
-    pile[cardnum+matches-m] += copies
-  end
-
 end
 
-puts pile.values.inject(:+)
+
+if __FILE__ == $0
+  puts App.new(part: ENV['PART'].to_i).run ARGV[0]
+end
