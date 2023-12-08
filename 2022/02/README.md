@@ -1,5 +1,7 @@
 # Day 2: Rock Paper Scissors
 
+[Full info here](https://adventofcode.com/2022/day/2)
+
 ## Part 1
 
 >Appreciative of your help yesterday, one Elf gives you an encrypted strategy
