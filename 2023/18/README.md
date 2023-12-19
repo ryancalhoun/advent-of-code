@@ -33,8 +33,19 @@ hexadecimal color code.
 
 >When viewed from above, the above example dig plan would result in the
 following loop of trench (#) having been dug out from otherwise ground-level
-terrain (.): ``` ####### #.....# ###...# ..#...# ..#...# ###.### #...#..
-##..### .#....# .###### ```
+terrain (.):
+```
+#######
+#.....#
+###...#
+..#...#
+..#...#
+###.###
+#...#..
+##..###
+.#....#
+.######
+```
 
 >At this point, the trench could contain 38 cubic meters of lava. However, this
 is just the edge of the lagoon; the next step is to dig out the interior so
@@ -50,7 +61,7 @@ that it is one meter deep as well:
 #######
 .######
 .######
-
+```
 >The Elves are concerned the lagoon won't be large enough; if they follow their
 dig plan, how many cubic meters of lava could it hold?
 
