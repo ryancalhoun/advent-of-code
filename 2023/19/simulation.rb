@@ -1,12 +1,14 @@
+require_relative 'range_object'
 class Simulation
   def initialize
-    @obj = { 'm' => 4, 'a' => 2, 'x' => 7, 's' => 9 }
+    @q = [RangeObject.new(self)]
   end
-  def values
-    @obj.values
+  def each
+    until @q.empty?
+      yield @q.shift
+    end
   end
-  def [](key)
-    @obj[key]
+  def add(obj)
+    @q << RangeObject.new(self, obj)
   end
 end
-

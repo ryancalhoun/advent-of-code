@@ -29,23 +29,16 @@ class App
     workflows['A'] = Destination.new
     workflows['R'] = Destination.new
 
-    if @part == 1
-      objects.each do |obj|
-        name = 'in'
-        while name
-          w = workflows[name]
-          name = w.process obj
-        end
-      end
-      workflows['A'].sum
-    else
-      obj = Simulation.new
+    objects = Simulation.new unless @part == 1
+
+    objects.each do |obj|
       name = 'in'
       while name
         w = workflows[name]
         name = w.process obj
       end
     end
+    workflows['A'].sum
   end
 end
 
