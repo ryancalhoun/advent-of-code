@@ -9,7 +9,7 @@ class Wiring
   def wire!(&block)
     @connections.keys.each do |key|
       receiver = block.call key
-      @connections[key] = receiver.onreceive mod.name if receiver
+      @connections[key] = receiver.onreceive mod.name
     end
   end
   def trigger!(pulse)
