@@ -25,9 +25,12 @@ class Vertex
   end
   def min_cost
     @from_path.values.min
+    #@from_path.select {|path, cost| path.size >= 4 }.sort_by {|path, cost| cost }[0].last
+  end
+  def min_path
+    @from_path.select {|path, cost| path.size >= 4 }.sort_by {|path, cost| cost }[0].first
   end
   def with_min
-    #@from_path.select {|path, cost| cost == min }.each do |path, cost|
     @from_path.each do |path, cost|
       yield cost, path + [loc]
     end
@@ -37,19 +40,61 @@ class Vertex
     v.add(self)
   end
   def relevant_part(from_path)
-    return nil if from_path[-2] == loc
-    return from_path if from_path.size < 3
+    #return nil if from_path[-2] == loc
+    #return from_path if from_path.size < 3
+    return from_path if from_path.size < 2
 
-    i_aligned, is = from_path.reverse.chunk {|p| p.first == loc.first }.first
-    j_aligned, js = from_path.reverse.chunk {|p| p.last == loc.last }.first
+    rpath = from_path.reverse
+    i_aligned, is = rpath.chunk {|p| p.first == loc.first }.first
+    j_aligned, js = rpath.chunk {|p| p.last == loc.last }.first
 
-    return nil if (i_aligned && is.size > 3) || (j_aligned && js.size > 3)
+    #puts "FROM #{from_path} #{i_aligned},#{is} #{j_aligned},#{js}"
 
-    return from_path.last([is.size, js.size].min)
+    #return nil if (i_aligned && is.size > 3) || (j_aligned && js.size > 3)
+    if i_aligned
+      #puts "I #{is}"
+      if is.size > 10 
+        return nil
+      end
+      #if rpath.size >= 4 && is.size < 4 && rpath[is.size..is.size+3]&.map(&:last) != [is.last.last]*4
+      if is.size == 1 && rpath.first(5).map(&:last) != [is[0].last]*5
+        return nil
+      end
+
+      j_vals = is.map(&:last).uniq
+      #puts "  jval #{j_vals}"
+      if j_vals.size != is.size || j_vals.include?(loc.last)
+        return nil
+      end
+      return from_path.last(is.size)
+    elsif j_aligned
+      #puts "J #{js}"
+      if js.size > 10
+        return nil
+      end
+      #if rpath.size >= 4 && js.size < 4 && rpath[js.size..js.size+3]&.map(&:first) != [js.last.first]*4
+      if js.size == 1 && rpath.first(5).map(&:first) != [js[0].first]*5
+        return nil
+      end
+
+      i_vals = js.map(&:first).uniq
+      #puts "  ival #{i_vals}"
+      if i_vals.size != js.size || i_vals.include?(loc.first)
+        return nil
+      end
+      return from_path.last(js.size)
+    end
+    nil
+
+    #return nil if (i_aligned && is.size > 10) || (j_aligned && js.size > 10)
+    #return nil if (i_aligned && is.size < [from_path.size, 4].min) && (j_aligned && js.size < [from_path.size, 4].min)
+
+    #return from_path.last([is.size, js.size].max)
   end
   def visit!(cost, from_path)
     if from = relevant_part(from_path)
       potential_cost = cost + (from.empty? ? 0 : @weight)
+      #puts "VISIT #{loc} FROM #{from} ... #{potential_cost}"
       if !@from_path[from] || @from_path[from] > potential_cost
         @from_path[from] = potential_cost
         true
@@ -88,8 +133,48 @@ def find_path(grid, start, finish)
     print "Current cost=#{u.min_cost} q=#{q.size}    \r"
   end
   puts
-  puts nodes.last.last.inspect
+#  puts nodes.last.last.inspect
   puts nodes.last.last.min_cost
+
+  n = nodes.last.last
+
+  path = []
+  loop do
+    best_path = n.min_path
+    puts best_path.inspect
+
+    path << best_path
+
+    start = best_path.first
+
+    if start == [0, 0]
+      break
+    end
+    n = nodes[start.first][start.last]
+  end
+
+  sum = grid.last.last
+  path.reverse.each do |seg|
+    puts "segment length=#{seg.size}"
+    seg.each do |p|
+      next if p == [0, 0]
+      puts "(#{p.first},#{p.last}) = #{grid[p.first][p.last]}"
+      sum += grid[p.first][p.last]
+    end
+  end
+  puts sum
+
+  grid.size.times do |i|
+    grid[i].size.times do |j|
+      if path.find{ |seg| seg.include?([i, j]) } or [grid.size-1, grid.last.size-1] == [i,j]
+        print '#'
+      else
+        print '.'
+      end
+    end
+    puts
+  end
+
 end
 
 find_path(grid, [0, 0], [grid.size-1, grid.last.size-1])
