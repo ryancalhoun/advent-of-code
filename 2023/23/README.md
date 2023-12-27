@@ -78,7 +78,7 @@ user    5m11.720s
 sys     0m0.043s
 ```
 
-What I decided to do was a two-pase traveral of the map. First, I would identify
+What I decided to do was a two-phase traveral of the map. First, I would identify
 the start and end points of all path segments. Any time I got to a junction with
 more than one way to go, I'd cut off the segment and start a new one for each
 direction.
