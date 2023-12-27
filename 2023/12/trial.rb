@@ -1,5 +1,6 @@
 require_relative 'records'
 require_relative 'damaged'
+require_relative 'sequence'
 
 class Trial
   attr_reader :records, :damaged, :visited
@@ -7,6 +8,7 @@ class Trial
   def initialize(records, damaged)
     @records, @damaged = records, damaged
     @visited = []
+    @sequence = Sequence.new
   end
 
   def self.parse(line)
@@ -66,6 +68,14 @@ class Trial
     damaged.each_with_index do |d,i|
       (visited[i] ||= {})[d.to_range] = 1
     end
+    damaged.each_cons(2).with_index do |pair, i|
+      #(@pairs[i] ||= Pair.new).add pair.first.from, pair.last.from
+        #puts "#{pair.first.to_range}-->#{pair.last.to_range}"
+    end
+    @sequence.add *damaged.map(&:from)
+    #puts @pairs.inspect
+        #@pairs[ [damaged[i-1].to_range, d.to_range] ] += 1
+    #puts "SNAPSHOT #{visited}"
   end
 
   def lock_in!
@@ -119,7 +129,12 @@ class Trial
         end.map {|k,v| v }.sum
       end
     end
+    puts "COUNTED = #{@sequence.score}"
     visited.last.values.sum
+  end
+
+  def count_by_pairs
+    @sequence.score
   end
 
   def done?
