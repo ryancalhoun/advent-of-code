@@ -18,8 +18,8 @@ work out which bricks are safe to disintegrate. For example:
 ```
 
 >Each line of text in the snapshot represents the position of a single brick at
-the time the snapshot was taken. The position is given as two x,y,z coordinates
-- one for each end of the brick - separated by a tilde (~). Each brick is made
+the time the snapshot was taken. The position is given as two x,y,z coordinates -
+one for each end of the brick - separated by a tilde (~). Each brick is made
 up of a single straight line of cubes, and the Elves were even careful to
 choose a time for the snapshot that had all of the free-falling bricks at
 integer positions above the ground, so the whole snapshot is aligned to a
