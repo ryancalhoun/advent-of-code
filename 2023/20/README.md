@@ -58,7 +58,7 @@ required to deliver a single low pulse to the module named rx?
 ## Solution
 
 Part one was a pretty cool simulation of asynchronous communication. It was
-actually easier to think of it as an actual network than it was to write
+easier to think of it as an actual network than it was to write
 synchronous code to trigger all the callbacks. In Ruby, blocks helps organize
 all the now/later behavior. This would have been interesting to code in
 Javascript.
