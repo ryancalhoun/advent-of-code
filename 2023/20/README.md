@@ -41,8 +41,7 @@ itself)?
 
 >In the first example, the same thing happens every time the button is pushed: 8
 low pulses and 4 high pulses are sent. So, after pushing the button 1000 times,
-8000 low pulses and 4000 high pulses are sent. Multiplying these together gives
-32000000.
+8000 low pulses and 4000 high pulses are sent. Multiplying these together gives 32000000.
 
 ## Part 2
 
