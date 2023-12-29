@@ -57,6 +57,7 @@ also necessary to know the direction of motion, to determine if an intersection
 point is in the future or past.
 
 Given initial position `x`, `y`, and constant velocity `vx` and `vy`:
+
 $$
 \begin{aligned}
 m & = vy / vx \\
@@ -65,6 +66,7 @@ b & = y - mx
 $$
 
 Then the intersection point between two stones _with different slopes_ is:
+
 $$
 \begin{aligned}
 x & = \frac{b_{1} - b_{0}}{m_{0} - m_{1}} \\
