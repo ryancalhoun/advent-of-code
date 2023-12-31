@@ -14,8 +14,13 @@ class App
         stones << Stone.parse(line)
       end
     end
-    area = Area.new @bounds
-    area.count_future_intersections stones
+    area = Area.new stones
+    if @part == 1
+      area.future_intersections_within @bounds
+    else
+      x, y, z = area.find_magic_line
+      x + y + z
+    end
   end
 end
 

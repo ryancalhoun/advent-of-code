@@ -1,5 +1,5 @@
 class Stone
-  attr_reader :x, :y, :z, :m, :b
+  attr_reader :x, :y, :z, :vx, :vy, :vz, :m, :b
   def initialize(x, y, z, vx, vy, vz)
     @x, @y, @z = x, y, z
     @vx, @vy, @vz = vx, vy, vz
@@ -14,6 +14,10 @@ class Stone
 
   def future?(x, y)
    (x - @x) * @vx > 0 && (y - @y) * @vy > 0
+  end
+
+  def z_at(t)
+    z + vz*t
   end
 
   def intersection(s)

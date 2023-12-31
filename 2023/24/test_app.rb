@@ -11,4 +11,11 @@ describe App do
       expect(subject.run 'sample.txt').to eq 2
     end
   end
+  context 'part two' do
+    let(:part) { 2 }
+    let(:bounds) { 'anything' }
+    it 'finds magic line' do
+      expect(subject.run 'sample.txt').to eq 47
+    end
+  end
 end
