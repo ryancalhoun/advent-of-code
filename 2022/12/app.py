@@ -1,7 +1,5 @@
 import sys
-import math
-
-sys.setrecursionlimit(2000)
+import os
 
 elev = []
 start = ()
@@ -32,46 +30,39 @@ def neighbors(elev, p):
   if p[1] < len(elev[p[0]]) - 1:
     yield (p[0], p[1]+1)
 
-def shortest_path(elev, end, path, visited):
-  p = path[-1]
-  if p == end:
-    print(f"Found end")
-    return 0
+def shortest_path_lengths(elev, end):
 
-  e = elev[p[0]][p[1]]
+  dist = {
+    end: 0
+  }
 
-  found = []
+  q = [end]
+  while len(q) > 0:
+    p = q.pop(0)
+    e = elev[p[0]][p[1]]
 
-  to_try = [n for n in neighbors(elev, p)]
-  to_try.sort(key=lambda d : math.sqrt((d[0]-end[0])**2 + (d[1]-end[1])**2))
-
-  for n in to_try:
-
-    if n in visited:
-      d = visited[n]
-      if not d:
+    for n in neighbors(elev, p):
+      if elev[n[0]][n[1]] + 1 < e:
         continue
-      print(f"({p} : Found visited route {d+1} from{n}")
-      found.append(d + 1)
 
-    else:
-      if elev[n[0]][n[1]] <= e+1 and n not in path:
-        path.append(n)
+      if not dist.get(n) or dist.get(n) > dist[p] + 1:
+        dist[n] = dist[p] + 1
+        q.append(n)
 
-        s = shortest_path(elev, end, path, visited)
-        print(f"{p} : path through {n} - {s}")
-        if type(s) == int:
-          found.append(s + 1)
+  return dist
 
-        path.pop()
+dist = shortest_path_lengths(elev, end)
 
-  if len(found) == 0:
-    visited[p] = None
-    return None
+if os.environ.get('PART') == '1':
+  print(dist[start])
+else:
 
-  shortest = min(found)
-  visited[p] = shortest
+  starts = []
+  for i in range(len(elev)):
+    for j in range(len(elev[i])):
+      if elev[i][j] == ord('a') and dist.get((i, j)):
+        starts.append((i, j))
+  
 
-  return shortest
+  print(min([dist[s] for s in starts]))
 
-print(shortest_path(elev, end, [start], {}))
