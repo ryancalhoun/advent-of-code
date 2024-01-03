@@ -90,7 +90,7 @@ here goes.
 My goal is to get something in the form $ax + by + cz = d$, so that I can
 use an $LU$ solver to get the answer.
 
-The unknowns are $x_{0}, y_{0}, $z_{0}, vx, vy, vz$. But these are not all
+The unknowns are $x_{0}, y_{0}, z_{0}, vx, vy, vz$. But these are not all
 independent unknowns. Because there is a single magic line that intersects
 all others, this problem should be unambiguously solvable in the $xy$ plane,
 so I'm going to ignore the $z$ direction.
