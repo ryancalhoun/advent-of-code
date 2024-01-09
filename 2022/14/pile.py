@@ -3,7 +3,7 @@ class Pile:
     self.x, self.y = p
     self._top = {}
     self._children = {}
-    self._parent = None
+    self._infinite = False
 
   def get(self, x):
     ys = self._top.get(x) or []
@@ -68,4 +68,6 @@ class Pile:
 
   def merge(self, child):
     self._children[child] = child
-    child._parent = self
+
+  def be_infinite(self):
+    self._infinite = True

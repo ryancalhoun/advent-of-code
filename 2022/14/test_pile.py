@@ -41,6 +41,13 @@ class TestPile(unittest.TestCase):
 
     self.assertEqual(pile.next_pos((3, 8)), [(3, 8)])
 
+  def test_infinite(self):
+    pile = Pile((0, 100))
+    pile.be_infinite()
+    pile.add((0, 1))
+
+    self.assertEqual(pile.first_pos(), (0, 0))
+
 
 if __name__ == '__main__':
   unittest.main()
