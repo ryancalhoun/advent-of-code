@@ -1,71 +1,47 @@
 import sys
 import os
 import re
+import manhattan
+import cartesian
+import covering
 
-def dist(a, b):
-  return abs(b[0] - a[0]) + abs(b[1] - a[1])
-
-def overlap_x(a, y, d):
-  dy = abs(a[1] - y)
-  dx = d - dy
-  if dx > 0:
-    return (a[0] - dx, a[0] + dx)
-
-def overlapping(sensors, y):
+def covered(sensors, y):
+  c = []
   for s in sensors:
-    x = overlap_x(s, y, sensors[s])
+    x = manhattan.overlap_x(s, sensors[s], y)
     if x:
-      yield x
+      c.append(x)
+  return covering.reduced(c)
 
-def intersections(up, down):
-  for u0, u1 in up:
-    b1 = u0[1] + u0[0]
-    for d0, d1 in down:
-      b2 = d0[1] - d0[0]
+def main():
+  sensors = {}
 
-      x = (b2 - b1) / -2
-      y = (b2 + b1) / 2
+  edges = []
 
-      if d0[0] <= u1[0] and u0[0] <= d1[0]:
-        yield int(x), int(y)
+  for line in sys.stdin:
+    s, b = [(int(p[0]), int(p[1])) for p in re.findall(r'x=(-?\d+), y=(-?\d+)', line)]
+    d = manhattan.dist(s, b)
+    sensors[s] = d
 
-def get_covered_ranges(sensors, y):
-  covered = sorted([c for c in overlapping(sensors, y)], key=lambda x: x[0])
-  joined = []
-  for c in covered:
-    if len(joined) > 0 and c[0] <= joined[-1][1] + 1:
-      joined[-1] = (joined[-1][0], max(joined[-1][1], c[1]))
-    else:
-      joined.append(c)
-  return joined
+    u = d + 1
+    edges.append([(s[0], s[1] - u), (s[0] + u, s[1])])
+    edges.append([(s[0] - u, s[1]), (s[0], s[1] + u)])
 
-sensors = {}
+    edges.append([(s[0], s[1] + u), (s[0] + u, s[1])])
+    edges.append([(s[0] - u, s[1]), (s[0], s[1] - u)])
 
-up = []
-down = []
+  if os.environ.get('PART') == '1':
+    print(sum([r[1] - r[0] for r in covered(sensors, int(os.environ.get('ROW')))]))
+  else:
+    s = {}
+    for x, y in cartesian.intersections(edges):
+      if x >= 0 and x <= int(os.environ.get('BOUND')) and y >= 0 and y <= int(os.environ.get('BOUND')):
+        s[y] = True
 
-for line in sys.stdin:
-  s, b = [(int(p[0]), int(p[1])) for p in re.findall(r'x=(-?\d+), y=(-?\d+)', line)]
-  d = dist(s, b)
-  sensors[s] = d
+    for y in s:
+      c = covered(sensors, y)
+      if len(c) > 1:
+        print(400000*(c[0][1] + 1) + y)
 
-  down.append([(s[0], s[1] - d - 1), (s[0] + d + 1, s[1])])
-  down.append([(s[0] - d - 1, s[1]), (s[0], s[1] + d + 1)])
-
-  up.append([(s[0], s[1] + d + 1), (s[0] + d + 1, s[1])])
-  up.append([(s[0] - d - 1, s[1]), (s[0], s[1] - d - 1)])
-
-if os.environ.get('PART') == '1':
-  print(sum([r[1] - r[0] for r in get_covered_ranges(sensors, int(os.environ.get('ROW')))]))
-else:
-  s = {}
-  for x, y in intersections(up, down):
-    if x >= 0 and x <= int(os.environ.get('BOUND')) and y >= 0 and y <= int(os.environ.get('BOUND')):
-      s[y] = True
-
-  for y in s:
-    covered = get_covered_ranges(sensors, y)
-    if len(covered) > 1:
-      print(400000*(covered[0][1] + 1) + y)
-
-
+if __name__ == '__main__':
+  main()
