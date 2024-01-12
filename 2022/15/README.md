@@ -17,7 +17,7 @@ y-value.
 
 If you have a sensor with radius 2 at (3,3), then the width is obviously
 the greatest at y=3, and grows smaller as you move away. At y=3, x is
-covered from 1 to 5, and y=4, x is covered from 2 to 4, and a y=5, x is
+covered from 1 to 5, at y=4, x is covered from 2 to 4, and at y=5, x is
 only covered at 3.
 
 For a given y-value, for all sensor diamonds, how much of the diamond
@@ -40,18 +40,18 @@ sensor diamonds. Specifically, the uncovered perimeter that lies one
 unit beyond the covered area.
 
 ```
-1  ....O...O....
-2  ...O.O.O.O...
-3  ..O...X...O..
-4  .O...O.O...O.
-5  ..O.O.O.....O
-6  ...O.X.....O.
-7  ....O.O...O..
-8  .......O.O...
-9  ........O....
+1  ....A...B....
+2  ...A.A.B.B...
+3  ..A...X...B..
+4  .A...B.A...B.
+5  ..A.B.A.....B
+6  ...A.X.....B.
+7  ....A.B...B..
+8  .......B.B...
+9  ........B....
 ```
 
-So if there are two diamonds which have intersecting edges, these points
+So if there are two diamonds A and B which have intersecting edges, these points
 mark places where neither diamond is covering.
 
 Obviously, all points beyond the edges would also not be covered by these
