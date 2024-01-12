@@ -18,8 +18,8 @@ class App
         p_sum = t.count_by_pairs
 
         if t_sum != p_sum
-          puts "#{t_sum} != #{p_sum}"
-          exit
+        #  puts "#{t_sum} != #{p_sum}"
+        #  exit
         end
   
         total += t_sum

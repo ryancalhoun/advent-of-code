@@ -72,6 +72,7 @@ class Trial
       #(@pairs[i] ||= Pair.new).add pair.first.from, pair.last.from
         #puts "#{pair.first.to_range}-->#{pair.last.to_range}"
     end
+    puts "SNAP #{damaged.map &:from }"
     @sequence.add *damaged.map(&:from)
     #puts @pairs.inspect
         #@pairs[ [damaged[i-1].to_range, d.to_range] ] += 1
@@ -129,7 +130,9 @@ class Trial
         end.map {|k,v| v }.sum
       end
     end
-    puts "COUNTED = #{@sequence.score}"
+    puts visited.inspect
+    puts "SUM     = #{visited.last.values.sum}"
+    puts "SCORE   = #{@sequence.score}"
     visited.last.values.sum
   end
 

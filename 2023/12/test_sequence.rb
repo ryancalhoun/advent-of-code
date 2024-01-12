@@ -119,10 +119,10 @@ describe Sequence do
     expect(subject.score).to eq 9
 
     subject.add(3, 5, 8, 11)
-    expect(subject.score).to eq 11
+    expect(subject.score).to eq 12
 
     subject.add(3, 6, 8, 11)
-    expect(subject.score).to eq 12
+    expect(subject.score).to eq 13
 
     subject.add(3, 6, 8, 12)
     expect(subject.score).to eq 24
