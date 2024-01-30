@@ -37,5 +37,5 @@ $$
 To solve part 2, I just drop my unknown object in place of monkey 'humn' and
 override the equality operator to return the result of the inverse operations.
 
-Yes, I am abusing the equallity operator to perform a calculation and return
+Yes, I am abusing the equality operator to perform a calculation and return
 non-boolean result. The world won't melt.
