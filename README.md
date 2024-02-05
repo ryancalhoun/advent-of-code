@@ -21,3 +21,10 @@ to. I'm not a fan of forced indenting. Also, I really just feel like Python is l
 its expressiveness. Limiting...possibly even constricting, haha.
 
 See [my solutions](2022) to each day's puzzle.
+
+## 2021
+Another year backwards, and this time I'm going to work in [C++](https://cplusplus.com/). In a
+previous life, I built large, complex, highly performant and highly parallel applications in C++.
+It isn't a language well-suited to quick daily puzzles. But...we'll see how it goes.
+
+See [my solutions](2021) to each day's puzzle.
