@@ -1,5 +1,7 @@
 import sys
+
 from board import Board
+from cube import Cube
 from path import Path
 
 board = Board()
@@ -20,10 +22,14 @@ for line in sys.stdin:
     i += 1
   j += 1
 
+cube = Cube(board)
+
+
 p = board.first()
 x = 0
 for step in path.steps:
-  p = board.move(p, step)
-  x = 1000*(p[1]+1) + 4*(p[0]+1) + step[1]
+  board.move(p)
+#  p = board.move(p, step)
+#  x = 1000*(p[1]+1) + 4*(p[0]+1) + step[1]
 
 print(x)

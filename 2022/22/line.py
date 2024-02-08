@@ -16,20 +16,16 @@ class Line:
     self.open(i)
     self.walls |= {i}
 
+  def can_move(self, i):
+    return i in range(self.start, self.stop+1) and not i in self.walls
+
   def move(self, i, n):
     s = n > 0 and 1 or -1    
+
     while n != 0 and i + s not in self.walls:
+      if i + s < self.start or i + s > self.stop:
+        return i, n
       i += s
-      if i > self.stop:
-        if self.start in self.walls:
-          i = self.stop
-        else:
-          i = self.start
-      if i < self.start:
-        if self.stop in self.walls:
-          i = self.start
-        else:
-          i = self.stop
       n -= s
 
-    return i
+    return i, 0
