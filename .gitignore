@@ -4,4 +4,5 @@ __pycache__
 *.swo
 *.o
 *.bin
+*.dep
 full.txt
