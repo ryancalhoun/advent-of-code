@@ -30,7 +30,7 @@ Using the sample string `NNCB` and sample rules, after two steps, I'd have
 * HC: 1
 * NB: 2
 
-If I add up the totals for each pair's ending letter (`C` for `BC and `H` for `BH`, etc)
+If I add up the totals for each pair's ending letter (`C` for `BC` and `H` for `BH`, etc)
 I'd get:
 
 * B: 6
