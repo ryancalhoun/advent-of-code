@@ -30,6 +30,8 @@ all: sample1 sample2 part1 part2
 deps := $(objects:.o=.dep)
 -include $(deps)
 
+CXXFLAGS = -std=c++17 -g
+
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -MM -MF $(patsubst %.o,%.dep,$@) -o $@ $<
 	$(CXX) $(CXXFLAGS) -c -o $@ $<

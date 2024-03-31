@@ -1,5 +1,5 @@
 target = app.bin
-objects = main.o snailfish.o
+objects = main.o beacon.o scanner.o
 
 $(target): $(objects)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $(objects)
