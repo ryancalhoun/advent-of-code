@@ -78,6 +78,11 @@ void Beacon::shift(int dx, int dy, int dz)
   _z += dz;
 }
 
+Beacon Beacon::offset(int dx, int dy, int dz) const
+{
+  return Beacon(_x + dx, _y + dy, _z + dz);
+}
+
 std::istream& operator>>(std::istream& is, Beacon& b)
 {
   is >> b._x;

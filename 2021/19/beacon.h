@@ -19,6 +19,8 @@ public:
   void ccw();
   void shift(int dx, int dy, int dz);
 
+  Beacon offset(int dx, int dy, int dz) const;
+
 protected:
   friend std::istream& operator>>(std::istream& is, Beacon& b);
   friend std::ostream& operator<<(std::ostream& os, const Beacon& b);

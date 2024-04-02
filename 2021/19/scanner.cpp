@@ -3,10 +3,14 @@
 #include <ostream>
 #include <string>
 #include <sstream>
+#include <algorithm>
 #include <set>
 
 Scanner::Scanner()
   : _id(0)
+  , _x(0)
+  , _y(0)
+  , _z(0)
   , _i(0)
   , _j(0)
 {}
@@ -16,35 +20,65 @@ int Scanner::id() const
   return _id;
 }
 
+int Scanner::x() const
+{
+  return _x;
+}
+
+int Scanner::y() const
+{
+  return _y;
+}
+
+int Scanner::z() const
+{
+  return _z;
+}
+
 bool Scanner::alignWith(const Scanner& s)
 {
-  for(int i = 0; i < _beacons.size(); ++i)
+  for(int i = 0; i < _beacons.size() - 11; ++i)
   {
-    for(int j = 0; j < s._beacons.size(); ++j)
+    for(int j = 0; j < s._beacons.size() - 11; ++j)
     {
       int dx = s._beacons[i].x() - _beacons[j].x();
       int dy = s._beacons[i].y() - _beacons[j].y();
       int dz = s._beacons[i].z() - _beacons[j].z();
 
       int same = 0;
-      for(const auto& b : _beacons)
-      {
-        if(s._fixed.find(Beacon(b.x() + dx, b.y() + dy, b.z() + dz)) != s._fixed.end())
-          ++same;
-      }
 
-      if(same >= 12)
+      for(int m = 0, n = 0; m < _beacons.size() && n < s._beacons.size();)
       {
-        for(auto& b : _beacons)
-          b.shift(dx, dy, dz);
-        fix();
-        return true;
-      }
+        Beacon b = _beacons[m].offset(dx, dy, dz);
 
+        if(b < s._beacons[n])
+          ++m;
+        else if(s._beacons[n] < b)
+          ++n;
+        else
+          ++same, ++m, ++n;
+
+        if(same >= 12)
+          return moveTo(dx, dy, dz);
+      }
     }
   }
 
   return false;
+}
+
+bool Scanner::moveTo(int x, int y, int z)
+{
+  _x = x;
+  _y = y;
+  _z = z;
+
+  for(auto& b : _beacons)
+    b.shift(x, y, z);
+
+  //fix();
+
+  return true;
 }
 
 bool Scanner::nextTurn()
@@ -71,13 +105,9 @@ bool Scanner::nextTurn()
     ++_i;
   }
 
-  return true;
-}
+  std::sort(_beacons.begin(), _beacons.end());
 
-void Scanner::fix()
-{
-  for(const auto& b : _beacons)
-    _fixed.insert(b);
+  return true;
 }
 
 void Scanner::fw()
@@ -98,14 +128,14 @@ void Scanner::ccw()
     b.ccw();
 }
 
-std::set<Beacon>::const_iterator Scanner::begin() const
+std::vector<Beacon>::const_iterator Scanner::begin() const
 {
-  return _fixed.begin();
+  return _beacons.begin();
 }
 
-std::set<Beacon>::const_iterator Scanner::end() const
+std::vector<Beacon>::const_iterator Scanner::end() const
 {
-  return _fixed.end();
+  return _beacons.end();
 }
 
 std::istream& operator>>(std::istream& is, Scanner& s)
@@ -128,6 +158,7 @@ std::istream& operator>>(std::istream& is, Scanner& s)
     iss >> b;
     s._beacons.push_back(b);
   }
+  std::sort(s._beacons.begin(), s._beacons.end());
 
   return is;
 }

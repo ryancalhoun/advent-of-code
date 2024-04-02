@@ -1,8 +1,10 @@
 #include "scanner.h"
 
 #include <iostream>
+#include <string>
 #include <list>
 #include <map>
+#include <set>
 
 template <typename T, typename F>
 bool match(Scanner& s, const T& known, F& failed)
@@ -27,11 +29,45 @@ bool match(Scanner& s, const T& known, F& failed)
   return false;
 }
 
+template <typename T>
+int unique_beacons(const T& scanners)
+{
+  std::set<Beacon> all;
+  for(const auto& s : scanners)
+    all.insert(s.begin(), s.end());
+
+  return all.size();
+}
+
+template <typename T>
+int max_distance(const T& scanners)
+{
+  int max = 0;
+
+  for(const auto& a : scanners)
+  {
+    for(const auto& b : scanners)
+    {
+      int dx = ::abs(a.x() - b.x());
+      int dy = ::abs(a.y() - b.y());
+      int dz = ::abs(a.z() - b.z());
+
+      max = std::max(max, dx + dy + dz);
+    }
+  }
+
+  return max;
+}
 
 int main(int argc, char* const argv[], char* const envp[])
 {
   std::list<Scanner> known, unknown;
   std::map<int, std::set<int> > failed;
+
+  auto count = &unique_beacons<decltype(known)>;
+  while(*envp)
+    if(std::string(*envp++) == "PART=2")
+      count = &max_distance<decltype(known)>;
 
   while(std::cin)
   {
@@ -40,7 +76,6 @@ int main(int argc, char* const argv[], char* const envp[])
   }
 
   known.splice(known.end(), unknown, unknown.begin());
-  known.front().fix();
 
   while(! unknown.empty())
   {
@@ -54,9 +89,5 @@ int main(int argc, char* const argv[], char* const envp[])
     }
   }
 
-  std::set<Beacon> all;
-  for(const auto& k : known)
-    all.insert(k.begin(), k.end());
-
-  std::cout << all.size() << std::endl;
+  std::cout << count(known) << std::endl;
 }
