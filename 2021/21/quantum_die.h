@@ -1,16 +1,16 @@
 #pragma once
 
-#include <map>
+#include "roll_count.h"
 
 class QuantumDie
 {
 public:
   QuantumDie();
 
-  using ScoreCount = std::map<int,int>;
-  ScoreCount::const_iterator begin() const;
-  ScoreCount::const_iterator end() const;
+  size_t count() const;
+
+  operator const RollCount&() const;
 
 protected:
-  ScoreCount _scoreCount;
+  RollCount _count;
 };

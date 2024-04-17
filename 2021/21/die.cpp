@@ -4,7 +4,7 @@ Die::Die()
   : _val(0)
 {}
 
-int Die::roll(int n)
+RollCount Die::roll(int n)
 {
   int t = 0;
   while(n-- > 0)

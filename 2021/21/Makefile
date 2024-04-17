@@ -1,5 +1,5 @@
 target = app.bin
-objects = main.o die.o player.o quantum_die.o
+objects = main.o die.o player.o quantum_die.o roll_count.o
 
 $(target): $(objects)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $(objects)

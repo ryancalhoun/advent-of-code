@@ -1,11 +1,13 @@
 #pragma once
 
+#include "roll_count.h"
+
 class Die
 {
 public:
   Die();
 
-  int roll(int n);
+  RollCount roll(int n);
   int times() const;
 
 protected:
