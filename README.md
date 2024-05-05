@@ -28,3 +28,11 @@ previous life, I built large, complex, highly performant and highly parallel app
 It isn't a language well-suited to quick daily puzzles. But...we'll see how it goes.
 
 See [my solutions](2021) to each day's puzzle.
+
+## 2020
+For this year, I'm going to solve everything in [Perl](https://perl.org). It's been quite a
+while since I've used Perl for anything more than a one-liner (college, really). So, this
+should be an interesting trip down memory lane. Ha ha, get it? "Memory" lane, because these
+puzzles tend to require a lot of memory to brute-force.
+
+See [my solutions](2020) to each puzzle.
