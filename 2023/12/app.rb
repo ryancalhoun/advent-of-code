@@ -1,4 +1,4 @@
-require_relative 'trial'
+require_relative 'sequence'
 
 class App
   def initialize(part:)
@@ -6,27 +6,15 @@ class App
   end
   def run(filename)
     total = 0
-    other = 0
     File.open(filename) do |f|
       f.each_line do |line|
-        puts line
-        t = Trial.parse(line)
-        t.unfold! unless @part == 1
-        t.run!
+        m = /([#\.\?]+) ([\d,]+)/.match(line)
+        s = Sequence.new(m[1], m[2].split(',').map(&:to_i))
+        s.unfold!(5) unless @part == 1
 
-        t_sum = t.count_arrangements
-        p_sum = t.count_by_pairs
-
-        if t_sum != p_sum
-        #  puts "#{t_sum} != #{p_sum}"
-        #  exit
-        end
-  
-        total += t_sum
-        other += p_sum
+        total += s.count_matches
       end
     end
-    puts "Other=##{other}"
     total
   end
 end

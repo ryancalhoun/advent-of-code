@@ -1,35 +1,32 @@
 class Sequence
   attr_reader :score
-  def initialize
-    @s = []
-    @score = 0
-    @accum = Hash.new(0)
+  def initialize(text, numbers)
+    @text, @numbers = text, numbers
   end
-  def add(*s)
-    puts "ADD #{s}"
-    if @s.empty?
-      @score = 1
-    else
-      last = -1
-      s.each_with_index do |v,i|
-        if v != @s[i]
-          if last >= 0
-            @accum[i] += @accum[last]
-            @accum[last] = 0
-          end
-          
-          last = i
-        end
+  def unfold!(n)
+    @text = ([@text] * 5).join('?')
+    @numbers *= 5
+  end
+  def count_matches
+    states = '.'
+
+    @numbers.each do |n|
+      states += '#' * n + '.'
+    end
+
+    d = { 0 => 1 }
+    n = Hash.new(0)
+
+    @text.each_char do |c|
+      d.each do |k,v|
+        n[k+1] += d[k] if k+1 < states.size && (states[k+1] == c || c == '?')
+        n[k] += d[k] if states[k] == '.' && c != '#'
       end
 
-
-      m = 1 + (0..last-1).map {|j| @accum[j] }.sum
-      @score += m
-      @accum[last] += m
-
-      puts "  last=#{last} accum=#{@accum}"
-      puts "  score=#{@score}"
+      d = n
+      n = Hash.new(0)
     end
-    @s = s
+
+    d[states.size - 1] + d[states.size - 2]
   end
 end
