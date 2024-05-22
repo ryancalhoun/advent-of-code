@@ -69,7 +69,8 @@ fill(grid, start)
 puts count(grid) { |v|
   (0..64).include?(v) && v % 2 == 0
 }
-exit
+
+#exit
 
 
 ## Part 2
@@ -88,68 +89,68 @@ puts "Even = #{even}, odd = #{odd}"
 reset grid
 fill(grid, [0, 65])
 from_top = count(grid) { |v|
-  (0..130).include?(v) && v % 2 == 0
+  (0..131).include?(v) && v % 1 == 0
 }
 puts "From top = #{from_top}"
 
 reset grid
 fill(grid, [130, 65])
 from_bottom = count(grid) { |v|
-  (0..130).include?(v) && v % 2 == 0
+  (0..131).include?(v) && v % 1 == 0
 }
 puts "From bottom = #{from_bottom}"
 
 reset grid
 fill(grid, [65, 0])
 from_left = count(grid) { |v|
-  (0..130).include?(v) && v % 2 == 0
+  (0..131).include?(v) && v % 1 == 0
 }
 puts "From left = #{from_left}"
 
 reset grid
 fill(grid, [65, 130])
 from_right = count(grid) { |v|
-  (0..130).include?(v) && v % 2 == 0
+  (0..131).include?(v) && v % 1 == 0
 }
 puts "From right = #{from_right}"
 
 reset grid
 fill(grid, [0, 0])
 top_left = count(grid) { |v|
-  (0..195).include?(v) && v % 2 == 1
+  (0..195).include?(v) && v % 1 == 1
 }
 top_left2 = count(grid) { |v|
-  (0..64).include?(v) && v % 2 == 0
+  (0..64).include?(v) && v % 1 == 0
 }
 puts "From top left = #{top_left}, #{top_left2}"
 
 reset grid
 fill(grid, [0, 130])
 top_right = count(grid) { |v|
-  (0..195).include?(v) && v % 2 == 1
+  (0..195).include?(v) && v % 1 == 1
 }
 top_right2 = count(grid) { |v|
-  (0..64).include?(v) && v % 2 == 0
+  (0..64).include?(v) && v % 1 == 0
 }
 puts "From top right = #{top_right}, #{top_right2}"
 
 reset grid
 fill(grid, [130, 130])
 bottom_right = count(grid) { |v|
-  (0..195).include?(v) && v % 2 == 1
+  (0..195).include?(v) && v % 1 == 1
 }
 bottom_right2 = count(grid) { |v|
-  (0..64).include?(v) && v % 2 == 0
+  (0..64).include?(v) && v % 1 == 0
 }
 puts "From bottom right = #{bottom_right}, #{bottom_right2}"
 
 reset grid
 fill(grid, [130, 0])
 bottom_left = count(grid) { |v|
-  (0..195).include?(v) && v % 2 == 1
+  (0..195).include?(v) && v % 1 == 1
 }
 bottom_left2 = count(grid) { |v|
-  (0..64).include?(v) && v % 2 == 0
+  (0..64).include?(v) && v % 1 == 0
 }
 puts "From bottom left = #{bottom_left}, #{bottom_left2}"
 
