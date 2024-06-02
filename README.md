@@ -36,3 +36,10 @@ should be an interesting trip down memory lane. Ha ha, get it? "Memory" lane, be
 puzzles tend to require a lot of memory to brute-force.
 
 See [my solutions](2020) to each puzzle.
+
+## 2019
+Now it will be [Java](https://www.java.com/en/)'s turn. I once taught a class in Java. I have
+never liked Java and I don't find it either fun or practical. The syntax is awful and overly
+complex, and the runtime is heavy and unpredictable.
+
+See [my solutions](2019) in Java.
