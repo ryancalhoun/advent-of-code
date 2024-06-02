@@ -1,0 +1,64 @@
+<project name="Day 2" default="all">
+
+  <target name="all" depends="sample1,sample2,part1,part2"/>
+
+  <target name="sample1">
+    <antcall target="run">
+      <param name="part" value="1"/>
+      <param name="noun" value="9"/>
+      <param name="verb" value="10"/>
+      <param name="file" value="sample.txt"/>
+    </antcall>
+  </target>
+  <target name="sample2">
+    <antcall target="run">
+      <param name="part" value="2"/>
+      <param name="target" value="250"/>
+      <param name="file" value="sample.txt"/>
+    </antcall>
+  </target>
+  <target name="part1">
+    <antcall target="run">
+      <param name="part" value="1"/>
+      <param name="noun" value="12"/>
+      <param name="verb" value="2"/>
+      <param name="file" value="full.txt"/>
+    </antcall>
+  </target>
+  <target name="part2">
+    <antcall target="run">
+      <param name="part" value="2"/>
+      <param name="target" value="19690720"/>
+      <param name="file" value="full.txt"/>
+    </antcall>
+  </target>
+
+  <target name="build">
+    <javac srcdir="." includeantruntime="false"/>
+  </target>
+  <target name="clean">
+    <delete>
+      <fileset dir="." includes="**/*.class"/>
+    </delete>
+  </target>
+
+  <target name="run" depends="build">
+    <fail message="missing input file ${file}">
+      <condition>
+        <not>
+          <available file="${file}"/>
+        </not>
+      </condition>
+    </fail>
+    <java classname="App" fork="true" input="${file}" failonerror="true">
+      <env key="PART" value="${part}"/>
+      <env key="NOUN" value="${noun}"/>
+      <env key="VERB" value="${verb}"/>
+      <env key="TARGET" value="${target}"/>
+      <classpath>
+        <pathelement location="."/>
+      </classpath>
+    </java>
+  </target>
+
+</project>
