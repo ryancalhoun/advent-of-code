@@ -8,57 +8,43 @@ sub new
 sub match
 {
   my ($this, $message) = @_;
-
-  $message = [split //, $message] unless ref($message);
-
-  my $n = $this->_match($message, 0, 0);
-
-  $n == scalar @$message;
+  grep { $_ == length $message } $this->_match([split //, $message], 0, 0);
 }
 
 sub _match
 {
   my ($this, $message, $i, $id) = @_;
-
   my $rule = $this->{int $id};
 
   my @n;
+  push @n, $this->_match_seq($message, $i, $_) for @{$rule->{rule}};
 
-  for my $altern (@{$rule->{rule}})
-  {
-    my $n = $this->_match_seq($message, $i, $altern);
-    push @n, $n if $n;
-  }
-
-  return 0 unless @n;
-
-  return (sort { my ($a,$b) = @_; $a <=> $b } @n)[0];
+  @n;
 }
 
 sub _match_seq
 {
   my ($this, $message, $i, $seq) = @_;
 
-  my $n = 0;
-
+  my @n = (0);
   for my $sym (@$seq)
   {
-    if(my ($lit) = $sym =~ /"(\w+)"/)
+    my @m;
+    for my $j (@n)
     {
-      return 0 unless $message->[$i + $n] eq $lit;
-      $n += length $lit;
+      if(my ($lit) = $sym =~ /"(\w+)"/)
+      {
+        push @m, $j + length $lit if $message->[$i + $j] eq $lit;
+      }
+      else
+      {
+        push @m, $j + $_ for $this->_match($message, $i + $j, $sym);
+      }
     }
-    else
-    {
-      my $m = $this->_match($message, $i + $n, $sym);
-      return 0 unless $m;
-
-      $n += $m;
-    }
+    @n = @m;
   }
 
-  $n;
+  @n;
 }
-
 
 1;
