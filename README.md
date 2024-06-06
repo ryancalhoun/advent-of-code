@@ -43,3 +43,10 @@ never liked Java and I don't find it either fun or practical. The syntax is awfu
 complex, and the runtime is heavy and unpredictable.
 
 See [my solutions](2019) in Java.
+
+# 2018
+I am beginning with [C# Core](https://dotnet.microsoft.com/en-us/languages/csharp) even though
+I'm not done with 2019 yet. I've dabbled in .NET here and there over the years, but have yet to
+do much beyond minor modifications to existing code.
+
+See [my solutions](2018) in .NET Core.

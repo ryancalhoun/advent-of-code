@@ -6,4 +6,6 @@ __pycache__
 *.bin
 *.dep
 *.class
+obj
+bin
 full.txt
