@@ -2,67 +2,6 @@
 
 [Full info here](https://adventofcode.com/2023/day/10)
 
-## Part 1
-
->Scanning the area, you discover that the entire field you're standing on is
-densely packed with pipes; it was hard to tell at first because they're the
-same metallic silver color as the "ground". You make a quick sketch of all of
-the surface pipes you can see (your puzzle input).
-
->The pipes are arranged in a two-dimensional grid of tiles:
-
->- | is a vertical pipe connecting north and south.
->- - is a horizontal pipe connecting east and west.
->- L is a 90-degree bend connecting north and east.
->- J is a 90-degree bend connecting north and west.
->- 7 is a 90-degree bend connecting south and west.
->- F is a 90-degree bend connecting south and east.
->- . is ground; there is no pipe in this tile.
->- S is the starting position of the animal; there is a pipe on this tile, but your sketch doesn't show what shape the pipe has.
-Based on the acoustics of the animal's scurrying, you're confident the pipe that contains the animal is one large, continuous loop.
-
->For example, here is a square loop of pipe:
-```
-.....
-.F-7.
-.|.|.
-.L-J.
-.....
-```
-
-> Find the single giant loop starting at S. How many steps along the loop does
-it take to get from the starting position to the point farthest from the
-starting position?
-
-## Part 2
-
->You quickly reach the farthest point of the loop, but the animal never emerges.
-Maybe its nest is within the area enclosed by the loop?
-
->To determine whether it's even worth taking the time to search for such a nest,
-you should calculate how many tiles are contained within the loop. For example:
-```
-...........
-.S-------7.
-.|F-----7|.
-.||.....||.
-.||.....||.
-.|L-7.F-J|.
-.|..|.|..|.
-.L--J.L--J.
-...........
-```
-
->The above loop encloses merely four tiles - the two pairs of . in the southwest
-and southeast
-
->Figure out whether you have time to search for the nest by calculating the
-area within the loop. How many tiles are enclosed by the loop?
-
----
-
-## Solution
-
 For this puzzle, I chose to implement the grid as an actual grid. I used an array of
 arrays to be indexed by the i, j positions of each spot. Since the grid is so dense,
 and since there is a constant need to directly access each spots immediate neighbors,

@@ -2,65 +2,6 @@
 
 [Full info here](https://adventofcode.com/2023/day/14)
 
-## Part 1
-
->In short: if you move the rocks, you can focus the dish. The platform even has
-a control panel on the side that lets you tilt it in one of four directions!
-The rounded rocks (O) will roll when the platform is tilted, while the
-cube-shaped rocks (#) will stay in place. You note the positions of all of the
-empty spaces (.) and rocks (your puzzle input). For example:
-```
-O....#....
-O.OO#....#
-.....##...
-OO.#O....O
-.O.....O#.
-O.#..O.#.#
-..O..#O..O
-.......O..
-#....###..
-#OO..#....
-```
-
->Start by tilting the lever so all of the rocks will slide north as far as they
-will go:
-```
-OOOO.#.O..
-OO..#....#
-OO..O##..O
-O..#.OO...
-........#.
-..#....#.#
-..O..#.O.O
-..O.......
-#....###..
-#....#....
-```
-
->The total load is the sum of the load caused by all of the rounded rocks. In
-this example, the total load is 136.
-
->Tilt the platform so that the rounded rocks all roll north. Afterward, what is
-the total load on the north support beams?
-
-## Part 2
-
->Each cycle tilts the platform four times so that the rounded rocks roll north,
-then west, then south, then east. After each tilt, the rounded rocks roll as
-far as they can before the platform tilts in the next direction. After one
-cycle, the platform will have finished rolling the rounded rocks in those four
-directions in that order.
-
->In the above example, after 1000000000 cycles, the total load on the north
-support beams is 64.
-
->Run the spin cycle for 1000000000 cycles. Afterward, what is the total load on
-the north support beams?
-
----
-
-## Solution
-
 For this puzzle I chose to keep the fixed rocks stored in two hashes, one by
 row and one by column. This way, I could always look up all the fixed rocks
 in-line with a given rolling rock, whether north/south or east/west.

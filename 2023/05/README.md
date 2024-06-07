@@ -2,68 +2,6 @@
 
 [Full info here](https://adventofcode.com/2023/day/5)
 
-## Part 1
->The almanac (your puzzle input) lists all of the seeds that need to be planted.
->It also lists what type of soil to use with each kind of seed, what type of fertilizer
->to use with each kind of soil, what type of water to use with each kind of fertilizer,
->and so on. Every type of seed, soil, fertilizer and so on is identified with a number,
->but numbers are reused by each category - that is, soil 123 and fertilizer 123 aren't
->necessarily related to each other.
-
->For example:
-```
-seeds: 79 14 55 13
-
-seed-to-soil map:
-50 98 2
-52 50 48
-
-soil-to-fertilizer map:
-0 15 37
-37 52 2
-39 0 15
-
-fertilizer-to-water map:
-49 53 8
-0 11 42
-42 0 7
-57 7 4
-
-water-to-light map:
-88 18 7
-18 25 70
-
-light-to-temperature map:
-45 77 23
-81 45 19
-68 64 13
-
-temperature-to-humidity map:
-0 69 1
-1 0 69
-
-humidity-to-location map:
-60 56 37
-56 93 4
-```
->With this map, you can look up the soil number required for each initial seed number:
->- Seed number 79 corresponds to soil number 81.
->- Seed number 14 corresponds to soil number 14.
->- Seed number 55 corresponds to soil number 57.
->- Seed number 13 corresponds to soil number 13.
-
->What is the lowest location number that corresponds to any of the initial seed numbers?
-
-# Part 2
->Everyone will starve if you only plant such a small number of seeds. Re-reading the almanac,
->it looks like the seeds: line actually describes ranges of seed numbers.
-
->The values on the initial seeds: line come in pairs. Within each pair, the first value
->is the start of the range and the second value is the length of the range.
-
----
-
-## Solution
 On its face, this puzzle is just an iterative map lookup. Take an input, look up its value in
 the first map, then use that as input to the next map, and so on.
 

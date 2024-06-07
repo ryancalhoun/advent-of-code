@@ -1,7 +1,13 @@
+task default: [:test, :part1, :part2]
+
 task :test do
-  sh 'rspec test_*.rb'
+  sh 'rspec test*.rb'
 end
 
-task :run do
-  sh 'ruby app.rb full.txt'
+task :part1 do
+  sh 'PART=1 ruby app.rb full.txt'
+end
+
+task :part2 do
+  sh 'PART=2 ruby app.rb full.txt'
 end

@@ -2,55 +2,6 @@
 
 [Full info here](https://adventofcode.com/2023/day/22)
 
-## Part One
-
->The Elves responsible for water filtering operations took a snapshot of the
-bricks while they were still falling (your puzzle input) which should let you
-work out which bricks are safe to disintegrate. For example:
-```
-1,0,1~1,2,1
-0,0,2~2,0,2
-0,2,3~2,2,3
-0,0,4~0,2,4
-2,0,5~2,2,5
-0,1,6~2,1,6
-1,1,8~1,1,9
-```
-
->Each line of text in the snapshot represents the position of a single brick at
-the time the snapshot was taken. The position is given as two x,y,z coordinates -
-one for each end of the brick - separated by a tilde (~). Each brick is made
-up of a single straight line of cubes, and the Elves were even careful to
-choose a time for the snapshot that had all of the free-falling bricks at
-integer positions above the ground, so the whole snapshot is aligned to a
-three-dimensional cube grid.
-
->Because the snapshot was taken while the bricks were still falling, some bricks
-will still be in the air; you'll need to start by figuring out where they will
-end up. Bricks are magically stabilized, so they never rotate, even in weird
-situations like where a long horizontal brick is only supported on one end. Two
-bricks cannot occupy the same position, so a falling brick will come to rest
-upon the first other brick it encounters.
-
->Your first task is to figure out which bricks are safe to disintegrate. A
-brick can be safely disintegrated if, after removing it, no other bricks would
-fall further directly downward.
-
-## Part Two
-
->Disintegrating bricks one at a time isn't going to be fast enough. While it
-might sound dangerous, what you really need is a chain reaction.
-
->You'll need to figure out the best brick to disintegrate. For each brick,
-determine how many other bricks would fall if that brick were disintegrated.
-
->For each brick, determine how many other bricks would fall if that brick were
-disintegrated. What is the sum of the number of other bricks that would fall?
-
----
-
-## Solution
-
 The initial step was pretty simple, just determine if two bricks overlap. They
 need at least one square of overlap in both `x` and `y` directions.
 

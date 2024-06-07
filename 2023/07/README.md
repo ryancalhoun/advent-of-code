@@ -2,54 +2,6 @@
 
 [Full info here](https://adventofcode.com/2023/day/7)
 
-## Part 1
-
->In Camel Cards, you get a list of hands, and your goal is to order
->them based on the strength of each hand. A hand consists of five cards
->labeled one of `A, K, Q, J, T, 9, 8, 7, 6, 5, 4, 3, or 2`. The relative
->strength of each card follows this order, where A is the highest and 2
->is the lowest.
-
->Every hand is exactly one type. From strongest to weakest, they are:
->- Five of a kind, where all five cards have the same label: AAAAA
->- Four of a kind, where four cards have the same label and one card has a different label: AA8AA
->- Full house, where three cards have the same label, and the remaining two cards share a different label: 23332
->- Three of a kind, where three cards have the same label, and the remaining two cards are each different from any other card in the hand: TTT98
->-Two pair, where two cards share one label, two other cards share a second label, and the remaining card has a third label: 23432
->-One pair, where two cards share one label, and the other three cards have a different label from the pair and each other: A23A4
->-High card, where all cards' labels are distinct: 23456
-
->To play Camel Cards, you are given a list of hands and their corresponding bid (your puzzle input). For example:
-```
-32T3K 765
-T55J5 684
-KK677 28
-KTJJT 220
-QQQJA 483
-```
-
-_(Full ordering rules on the original AoC page)_
-
->Now, you can determine the total winnings of this set of hands by adding
->up the result of multiplying each hand's bid with its rank >
->`(765 * 1 + 220 * 2 + 28 * 3 + 684 * 4 + 483 * 5)`. So the total winnings
->in this example are 6440.
-
-Find the rank of every hand in your set. What are the total winnings?
-
-## Part 2
-
->To make things a little more interesting, the Elf introduces one additional rule.
->Now, J cards are jokers - wildcards that can act like whatever card would make the
->hand the strongest type possible.
-
->To balance this, J cards are now the weakest individual cards, weaker even than 2.
->The other cards stay in the same order: `A, K, Q, T, 9, 8, 7, 6, 5, 4, 3, 2, J`.
-
----
-
-## Solution
-
 This puzzle is all about ~sorting~ ordering with custom rules. The distinction between
 sorting and ordering is important to get the right answers.
 
