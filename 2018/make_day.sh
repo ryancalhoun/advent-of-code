@@ -17,18 +17,57 @@ cat > README.md <<END
 END
 fi
 
-if [[ ! -f Makefile ]]; then
-cat > Makefile <<END
-all: sample1 sample2 part1 part2
+rm -f Program.cs
 
-sample1:
-	PART=1 dotnet run < sample.txt
-sample2:
-	PART=2 dotnet run < sample.txt
-part1:
-	PART=1 dotnet run < full.txt
-part2:
-	PART=2 dotnet run < full.txt
+if [[ ! -f App.cs ]]; then
+cat > App.cs <<END
+using System.IO;
+
+IDictionary<string,string> arguments =
+  args.Select(arg => arg.Split('=')).ToDictionary(s => s[0], s => s[1]);
+
+using (StreamReader file = new StreamReader(arguments["file"])) {
+
+}
+END
+fi
+
+if [[ ! -f build.cake ]]; then
+cat > build.cake <<END
+var target = Argument("target", "All");
+
+Task("All")
+	.IsDependentOn("Sample1")
+	.IsDependentOn("Sample2")
+	.IsDependentOn("Part1")
+	.IsDependentOn("Part2");
+
+Task("Build").Does(() => {
+	DotNetBuild(".");
+});
+
+var settings = new DotNetRunSettings {
+	NoBuild = false,
+	NoRestore = false
+};
+
+Task("Sample1").IsDependentOn("Build").Does(() => {
+	DotNetRun(".", "part=1 file=sample.txt", settings);
+});
+
+Task("Sample2").IsDependentOn("Build").Does(() => {
+	DotNetRun(".", "part=2 file=sample.txt", settings);
+});
+
+Task("Part1").IsDependentOn("Build").Does(() => {
+	DotNetRun(".", "part=1 file=full.txt", settings);
+});
+
+Task("Part2").IsDependentOn("Build").Does(() => {
+	DotNetRun(".", "part=2 file=full.txt", settings);
+});
+
+RunTarget(target);
 END
 
 fi
