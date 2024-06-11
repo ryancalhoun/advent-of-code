@@ -1,8 +1,14 @@
-﻿
+﻿using System.IO;
+
+IDictionary<string,string> arguments =
+  args.Select(arg => arg.Split('=')).ToDictionary(s => s[0], s => s[1]);
+
 List<int> changes = new List<int> {};
 
-for(string? line; (line = Console.ReadLine()) != null; ) {
-  changes.Add(Int32.Parse(line));
+using (StreamReader file = new StreamReader(arguments["file"])) {
+  for(string? line; (line = file.ReadLine()) != null; ) {
+    changes.Add(Int32.Parse(line));
+  }
 }
 
 int GetLast(List<int> changes) {
@@ -35,7 +41,7 @@ int FindRepeat(List<int> changes) {
   
 }
 
-if(Environment.GetEnvironmentVariable("PART") == "1") {
+if(arguments["part"] == "1") {
   Console.WriteLine(GetLast(changes));
 } else {
   Console.WriteLine(FindRepeat(changes));

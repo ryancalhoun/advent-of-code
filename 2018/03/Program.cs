@@ -1,5 +1,10 @@
 ﻿using System.Text.RegularExpressions;
+using System.IO;
+
 using Fabric = System.Collections.Generic.Dictionary<System.Tuple<int,int>,System.Collections.Generic.List<int>>;
+
+IDictionary<string,string> arguments =
+  args.Select(arg => arg.Split('=')).ToDictionary(s => s[0], s => s[1]);
 
 int CountOverlaps(Fabric fabric) {
   int x = 0;
@@ -36,22 +41,24 @@ int [] groups = new int[]{1,2,3,4,5};
 
 Fabric fabric = new Fabric();
 
-for(string? line; (line = Console.ReadLine()) != null;) {
-  Match m = Regex.Match(line, pattern);
-  List<int> claim = (from i in groups select Int32.Parse(m.Groups[i].Value)).ToList();
+using (StreamReader file = new StreamReader(arguments["file"])) {
+  for(string? line; (line = file.ReadLine()) != null;) {
+    Match m = Regex.Match(line, pattern);
+    List<int> claim = (from i in groups select Int32.Parse(m.Groups[i].Value)).ToList();
 
-  for(int i = 0; i < claim[3]; ++i) {
-    for(int j = 0; j < claim[4]; ++j) {
-      Tuple<int,int> p = new Tuple<int,int>(claim[1] + i, claim[2] + j);
+    for(int i = 0; i < claim[3]; ++i) {
+      for(int j = 0; j < claim[4]; ++j) {
+        Tuple<int,int> p = new Tuple<int,int>(claim[1] + i, claim[2] + j);
 
-      if(! fabric.ContainsKey(p))
-        fabric.Add(p, new List<int>());
-      fabric[p].Add(claim[0]);
+        if(! fabric.ContainsKey(p))
+          fabric.Add(p, new List<int>());
+        fabric[p].Add(claim[0]);
+      }
     }
   }
 }
 
-if(Environment.GetEnvironmentVariable("PART") == "1") {
+if(arguments["part"] == "1") {
   Console.WriteLine(CountOverlaps(fabric));
 } else {
   Console.WriteLine(FindIntact(fabric));

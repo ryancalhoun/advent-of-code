@@ -1,4 +1,9 @@
-﻿void Coorelate(IList<LogEntry> log, IDictionary<int, Guard> guards) {
+﻿using System.IO;
+
+IDictionary<string,string> arguments =
+  args.Select(arg => arg.Split('=')).ToDictionary(s => s[0], s => s[1]);
+
+void Coorelate(IList<LogEntry> log, IDictionary<int, Guard> guards) {
   Guard? guard = null;
 
   foreach(LogEntry e in log) {
@@ -16,8 +21,10 @@
 
 List<LogEntry> log = new List<LogEntry>();
 
-for(string? line; (line = Console.ReadLine()) != null;) {
-  log.Add(new LogEntry(line));
+using (StreamReader file = new StreamReader(arguments["file"])) {
+  for(string? line; (line = file.ReadLine()) != null;) {
+    log.Add(new LogEntry(line));
+  }
 }
 
 log.Sort();
@@ -28,7 +35,7 @@ Coorelate(log, guards);
 Guard? guard = null;
 Clock? clock = null;
 
-if(Environment.GetEnvironmentVariable("PART") == "1") {
+if(arguments["part"] == "1") {
   guard = guards.Values.MaxBy(g => g.TotalMinutesAsleep())!;
   clock = guard!.CountSleep();
 } else {

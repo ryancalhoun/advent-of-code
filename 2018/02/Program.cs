@@ -1,4 +1,9 @@
-﻿int Checksum(List<string> IDs) {
+﻿using System.IO;
+
+IDictionary<string,string> arguments =
+  args.Select(arg => arg.Split('=')).ToDictionary(s => s[0], s => s[1]);
+
+int Checksum(List<string> IDs) {
   int two = 0;
   int three = 0;
 
@@ -33,11 +38,13 @@ string FindClosest(List<string> IDs) {
 }
 
 List<string> IDs = new List<string>();
-for(string? line; (line = Console.ReadLine()) != null;) {
-  IDs.Add(line);
+using (StreamReader file = new StreamReader(arguments["file"])) {
+  for(string? line; (line = file.ReadLine()) != null;) {
+    IDs.Add(line);
+  }
 }
 
-if(Environment.GetEnvironmentVariable("PART") == "1") {
+if(arguments["part"] == "1") {
   Console.WriteLine(Checksum(IDs));
 } else {
   Console.WriteLine(FindClosest(IDs));
