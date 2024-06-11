@@ -50,3 +50,12 @@ I'm not done with 2019 yet. I've dabbled in .NET here and there over the years, 
 do much beyond minor modifications to existing code.
 
 See [my solutions](2018) in .NET Core.
+
+## 2017
+Might as well try these in [Node](https://nodejs.org/) also. I have a feeling this will be a bit
+awkward. As good at Node is at something, processing lines of input doesn't seem like one of
+them.
+
+See [my solutions](2017) in Node.
+
+

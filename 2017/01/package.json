@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "all": "npm run sample1 && npm run sample2 && npm run part1 && npm run part2",
+    "sample1": "PART=1 node app.js < sample.txt",
+    "sample2": "PART=2 node app.js < sample2.txt",
+    "part1": "PART=1 node app.js < full.txt",
+    "part2": "PART=2 node app.js < full.txt"
+  },
+
+  "main": "app.js"
+}
