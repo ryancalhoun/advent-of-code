@@ -58,4 +58,11 @@ them.
 
 See [my solutions](2017) in Node.
 
+## 2016
+Way back in grad school, I worked with [Matlab](https://www.mathworks.com/products/matlab.html) as
+part of my research. While not exactly the same, for this year I'm going to attempt every puzzle
+in [Octave](https://octave.org/) and see how it goes. I have the feeling that certain hard things
+will be very easy, and certain easy things will be very hard.
+
+See [my solutions](2016) in Octave.
 
