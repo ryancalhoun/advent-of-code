@@ -66,3 +66,10 @@ will be very easy, and certain easy things will be very hard.
 
 See [my solutions](2016) in Octave.
 
+## 2015
+This year will be a year of Polyglot solutions. Each day will combine at least two languages in
+a unique combination. That could mean stringing two scripts together with pipes, or embedding
+one inside another, or launching one as a child process of another. It's any anything-goes grab
+bag of code. My favorite.
+
+See [my solutions](2015) in Whatever.
