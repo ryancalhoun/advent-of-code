@@ -1,0 +1,31 @@
+task default: [:sample1, :sample2, :part1, :part2]
+
+java = Dir['*.java']
+classes = java.map {|f| f.sub('java', 'class') }
+
+task sample1: [classes] do
+  sh 'PART=1 ruby app.rb < sample.txt'
+end
+
+task sample2: [classes] do
+  sh 'PART=2 ruby app.rb < sample.txt'
+end
+
+task part1: [classes] do
+  sh 'PART=1 ruby app.rb < full.txt'
+end
+
+task part2: [classes] do
+  sh 'PART=2 ruby app.rb < full.txt'
+end
+
+
+task classes => java + ['build.xml'] do
+  sh 'ant build' 
+end
+
+task build: [classes]
+
+task :clean do
+  sh 'ant clean'
+end
