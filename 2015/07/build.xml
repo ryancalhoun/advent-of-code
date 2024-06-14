@@ -1,0 +1,90 @@
+<project name="bitwise" default="all">
+
+  <target name="all" depends="sample1,sample2,part1,part2"/>
+
+  <target name="sample1">
+    <antcall target="run">
+      <param name="part" value="1"/>
+      <param name="out" value="g"/>
+      <param name="file" value="sample.txt"/>
+    </antcall>
+  </target>
+  <target name="sample2">
+    <antcall target="run">
+      <param name="part" value="2"/>
+      <param name="out" value="g"/>
+      <param name="in" value="y"/>
+      <param name="file" value="sample.txt"/>
+    </antcall>
+  </target>
+  <target name="part1">
+    <antcall target="run">
+      <param name="part" value="1"/>
+      <param name="out" value="a"/>
+      <param name="file" value="full.txt"/>
+    </antcall>
+  </target>
+  <target name="part2">
+    <antcall target="run">
+      <param name="part" value="2"/>
+      <param name="out" value="a"/>
+      <param name="in" value="b"/>
+      <param name="file" value="full.txt"/>
+    </antcall>
+  </target>
+
+  <target name="run" depends="build">
+    <exec executable="./${target}" failonerror="true" input="${file}">
+      <env key="LD_LIBRARY_PATH" value="${java.home}/lib/server"/>
+      <env key="PART" value="${part}"/>
+      <env key="OUT" value="${out}"/>
+      <env key="IN" value="${in}"/>
+    </exec>
+    <fail message="missing input file ${file}">
+      <condition>
+        <not>
+          <available file="${file}"/>
+        </not>
+      </condition>
+    </fail>
+  </target>
+
+  <target name="build" depends="build-java,build-cpp"/>
+
+  <target name="build-java">
+    <javac srcdir="." includeantruntime="false"/>
+  </target>
+
+  <property name="java.home" value="/usr/lib/jvm/java-11-openjdk-amd64"/>
+  <property name="target" value="app.bin"/>
+
+
+  <uptodate property="cpp.built" targetfile="${target}">
+    <srcfiles dir="." includes="**/*.cpp"/>
+    <srcfiles dir="." includes="**/*.h"/>
+  </uptodate>
+
+  <target name="build-cpp" unless="cpp.built">
+    <fileset id="cpp" dir=".">
+      <include name="**/*.cpp"/>
+    </fileset>
+    <pathconvert property="cpp" pathsep=" " refid="cpp"/>
+    <echo message="cxx JAVA_HOME=${java.home} TARGET=${target}"/>
+    <exec executable="g++" failonerror="true">
+      <arg value="-std=c++17"/>
+      <arg value="-L${java.home}/lib/server"/>
+      <arg value="-I${java.home}/include"/>
+      <arg value="-I${java.home}/include/linux"/>
+      <arg value="-o${target}"/>
+      <arg line="${cpp}"/>
+      <arg value="-ljvm"/>
+    </exec>
+  </target>
+
+  <target name="clean">
+    <delete>
+      <fileset dir="." includes="**/*.class,**/*.bin"/>
+    </delete>
+  </target>
+
+</project>
