@@ -1,0 +1,16 @@
+task default: :all
+
+task all: [:sample1, :sample2, :part1, :part2]
+
+task :sample1 do
+  sh "PART=1 ./app.rb < sample.txt"
+end
+task :sample2 do
+  sh "PART=2 ./app.rb < sample.txt"
+end
+task :part1 do
+  sh "PART=1 ./app.rb < full.txt"
+end
+task :part2 do
+  sh "PART=2 ./app.rb < full.txt"
+end
