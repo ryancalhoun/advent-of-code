@@ -1,0 +1,31 @@
+task default: [:sample1, :sample2, :part1, :part2]
+
+target = 'app.bin'
+
+task sample1: target do
+  sh "PART=1 ./#{target} 1000 < sample.txt"
+end
+
+task sample2: target do
+  sh "PART=2 ./#{target} 1000 < sample.txt"
+end
+
+task part1: target do
+  sh "PART=1 ./#{target} 2503 < full.txt"
+end
+
+task part2: target do
+  sh "PART=2 ./#{target} 2503 < full.txt"
+end
+
+task build: target
+
+src = Dir['*.c'] 
+
+file target => src do
+  inc = RbConfig::CONFIG['rubyhdrdir']
+  arch = RbConfig::CONFIG['rubyarchhdrdir']
+  lib = RbConfig::CONFIG['libdir']
+
+  sh "gcc -I#{inc} -I#{arch} -L#{lib} #{src.join(' ')} -oapp.bin -lruby -Wl,-rpath,#{lib}"
+end
