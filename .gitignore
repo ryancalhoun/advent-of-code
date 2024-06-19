@@ -8,4 +8,5 @@ __pycache__
 *.class
 obj
 bin
+node_modules
 full.txt
