@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "all": "npm run sample1 && npm run sample2 && npm run part1 && npm run part2",
+    "sample1": "PART=1 TARGET=25 npm run -s run < sample.txt",
+    "part1": "PART=1 TARGET=150 npm run -s run < full.txt",
+    "sample2": "PART=2 TARGET=25 npm run -s run < sample.txt",
+    "part2": "PART=2 TARGET=150 npm run -s run < full.txt",
+
+
+    "build": "node -e \"const fs=require('fs');if(fs.statSync('capacity.cpp').mtime>fs.statSync('build/Release/capacity.node').mtime){process.exit(1)}\" || node-gyp configure build",
+    "run": "npm run build && node app.js",
+    "clean": "rm -rf build"
+  }
+}
