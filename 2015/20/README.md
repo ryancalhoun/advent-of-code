@@ -12,7 +12,8 @@ a huge array to represent houses, and populate it by adding multiples
 of each integer starting from 1. Here is what I did instead:
 
 Any number can be represented by the product of its prime factors:
-$$ n = a^x \cdot b^y \cdot c^z ...$$
+
+$$ n = a^x \cdot b^y \cdot c^z ... $$
 
 In this formulation, the number $n$ is the product of prime numbers
 $a$, $b$, and $c$, each raised to some power.
