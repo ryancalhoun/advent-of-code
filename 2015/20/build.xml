@@ -1,0 +1,40 @@
+<project name="11" default="all">
+
+  <target name="all" depends="part1,part2"/>
+
+  <target name="part1">
+    <antcall target="run">
+      <param name="part" value="1"/>
+      <param name="file" value="full.txt"/>
+    </antcall>
+  </target>
+  <target name="part2">
+    <antcall target="run">
+      <param name="part" value="2"/>
+      <param name="file" value="full.txt"/>
+    </antcall>
+  </target>
+
+  <target name="build">
+    <javac srcdir="." includeantruntime="false"/>
+  </target>
+  <target name="clean">
+    <delete>
+      <fileset dir="." includes="**/*.class"/>
+    </delete>
+  </target>
+
+  <target name="run" depends="build">
+    <fail message="missing input file ${file}">
+      <condition>
+        <not>
+          <available file="${file}"/>
+        </not>
+      </condition>
+    </fail>
+    <exec executable="./app.pl" failonerror="true" input="${file}">
+      <env key="PART" value="${part}"/>
+    </exec>
+  </target>
+
+</project>
