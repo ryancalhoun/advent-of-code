@@ -1,0 +1,29 @@
+task default: [:sample, :part1, :part2]
+
+task sample: :spells do
+  sh "PART=1 POINTS=10 MANA=250 ./app.rb < sample.txt"
+end
+
+task part1: :spells do
+  sh "PART=1 ./app.rb < full.txt"
+end
+
+task part2: :spells do
+  sh "PART=2 ./app.rb < full.txt"
+end
+
+spells = Dir['*.s']
+
+spells.each do |spell|
+  task "#{spell}o" => spell do
+    sh "gcc -shared -o#{spell}o #{spell}"
+  end
+end
+
+task spells: spells.map {|s| s + "o"}
+
+task :clean do
+  spells.each do |f|
+    rm_f f
+  end
+end
