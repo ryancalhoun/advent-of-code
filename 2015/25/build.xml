@@ -1,0 +1,39 @@
+<project name="11" default="all">
+
+  <target name="all" depends="sample,part1"/>
+
+  <target name="sample">
+    <antcall target="run">
+      <param name="file" value="sample.txt"/>
+    </antcall>
+  </target>
+  <target name="part1">
+    <antcall target="run">
+      <param name="file" value="full.txt"/>
+    </antcall>
+  </target>
+
+  <target name="build">
+    <javac srcdir="." includeantruntime="false"/>
+  </target>
+  <target name="clean">
+    <delete>
+      <fileset dir="." includes="**/*.class"/>
+    </delete>
+  </target>
+
+  <target name="run" depends="build">
+    <fail message="missing input file ${file}">
+      <condition>
+        <not>
+          <available file="${file}"/>
+        </not>
+      </condition>
+    </fail>
+    <exec executable="/bin/bash" failonerror="true" input="${file}">
+      <arg value="-c"/>
+      <arg line='"java FindSequencePosition | ./find_in_sequence.pl"'/>
+    </exec>
+  </target>
+
+</project>
