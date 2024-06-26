@@ -1,0 +1,13 @@
+task default: [:sample, :part1, :part2]
+
+task :sample do
+  sh "PART=1 STEPS=6 ruby app.rb < sample.txt"
+end
+
+task :part1 do
+  sh "PART=1 ruby app.rb < full.txt"
+end
+
+task :part2 do
+  sh "PART=2 ruby app.rb < full.txt"
+end
