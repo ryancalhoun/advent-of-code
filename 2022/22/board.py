@@ -29,9 +29,14 @@ class Board:
   def first(self):
     return (self.rows[0].start, 0)
 
-  def move(self, p):
+  def move(self, p, step):
     i, j = p
-    return self.rows[j].can_move(i)
+    dist, face = step
+    if face.horizontal():
+      i = self.rows[j].move(i, face.distance(dist))
+
+    return (i, j)
+    #return self.rows[j].can_move(i)
 
   def open(self, i, j):
     if len(self.rows) == j:
