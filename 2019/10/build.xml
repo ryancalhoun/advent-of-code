@@ -1,0 +1,49 @@
+<project name="Day 10" default="all">
+
+  <target name="all" depends="sample1,part1,part2"/>
+
+  <target name="sample1">
+    <antcall target="run">
+      <param name="part" value="1"/>
+      <param name="file" value="sample.txt"/>
+    </antcall>
+  </target>
+  <target name="part1">
+    <antcall target="run">
+      <param name="part" value="1"/>
+      <param name="file" value="full.txt"/>
+    </antcall>
+  </target>
+  <target name="part2">
+    <antcall target="run">
+      <param name="part" value="2"/>
+      <param name="file" value="full.txt"/>
+    </antcall>
+  </target>
+
+  <target name="build">
+    <javac srcdir="." includeantruntime="false" debug="true"/>
+  </target>
+  <target name="clean">
+    <delete>
+      <fileset dir="." includes="**/*.class"/>
+    </delete>
+  </target>
+
+  <target name="run" depends="build">
+    <fail message="missing input file ${file}">
+      <condition>
+        <not>
+          <available file="${file}"/>
+        </not>
+      </condition>
+    </fail>
+    <java classname="App" fork="true" input="${file}" failonerror="true">
+      <env key="PART" value="${part}"/>
+      <classpath>
+        <pathelement location="."/>
+      </classpath>
+    </java>
+  </target>
+
+</project>
