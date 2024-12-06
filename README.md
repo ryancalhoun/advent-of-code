@@ -5,6 +5,13 @@ From the [Advent of Code](https://adventofcode.com/) website:
 >interview prep, company training, university coursework, practice problems, a speed contest,
 >or to challenge each other.
 
+## 2024
+Dedicating this year to learning [Go](https://go.dev/).
+
+I've encountered Go tangentially on a few occations, usually relating to Kubernetes. This will be my first "deep" dive.
+
+See [my solutions](2024) to each day's puzzle.
+
 ## 2023
 This is my first year solving puzzles each day they are posted.
 
